@@ -21,31 +21,27 @@ print(Fibonacci_Sequence(num))
 """
 #文件的基本操作
 
-def FileControl(path,str):
-
-    """
-    输入： path = 所要打开的文件路径   str = 向文件中添加的字符串
-    输出： 无
-    返回值： true--成功   -1 --失败 
-    """
-
-    file = open(path,'a')   #新建一个文件用于追加，文件指针放在文件末尾
-    if file == False:      
-        return -1
-    else:       
-        file.write(str)   #向文件中写入字符串
-        file.close()        #关闭文件
-
-
 file_path = input("请输入文件路径（以enter结束）：")
-file_str = input("请输入所需要添加的内容（以enter结束）:")
-FileControl(file_path,file_str)
-f = open(file_path)
-str = f.read()
-f.close()
-print(FileControl.__doc__)
-print(str)
-
+file_act = 'r'      #默认为只读模式
+while(file_act != 'q'):
+    file_act = input("请输入所要进行的操作：(可选w,r,a三种模式)，按q退出")   
+    if(file_act == 'w') or (file_act == 'a'):
+        f = open(file_path,file_act)
+        file_str = input("请输入所需要添加的内容（以enter结束）:")
+        if(f.write(file_str + '\n') != 0):
+            print("写入成功！")
+        f.close()
+    elif (file_act == 'r'):
+        f = open(file_path,file_act)
+        str = f.read()
+        if(str != 0):
+            print("读取成功！")
+            print(str)
+        f.close()
+    elif(file_act == 'q'):
+        print("拜拜啦！")
+    else:
+        print("操作命令错误！")
 os.system("pause")
 
 
