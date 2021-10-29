@@ -1,4 +1,3 @@
-import os
 """
 #输出斐波那契数列
 def Fibonacci_Sequence(num): 
@@ -18,7 +17,7 @@ num = int(input())                #输入所求项数
 print(help(Fibonacci_Sequence))   #打印函数帮助文档
 print(Fibonacci_Sequence(num))
 
-"""
+
 #文件的基本操作
 
 file_path = input("请输入文件路径（以enter结束）：")
@@ -42,6 +41,41 @@ while(file_act != 'q'):
         print("拜拜啦！")
     else:
         print("操作命令错误！")
-os.system("pause")
+
+"""
 
 
+# 类和对象
+
+# 定义一个父类
+class Person:
+    def __init__(self, name, sex, age):
+        self.name = name
+        self.sex = sex
+        self.age = age
+
+    def display1(self):
+        print(f" name = {self.name}\n sex = {self.sex}\n age = {self.age}\n")
+
+
+class BasketballPlayer(Person):  # 定义一个篮球运动员的子类
+    def __init__(self, height, weight, speed, name, sex, age):     # 重写init
+        super().__init__(name, sex, age)
+        self.height = height  # 身高
+        self.weight = weight  # 体重
+        self.speed = speed  # 速度
+
+    def display2(self):
+        print(f" height = {self.height}\n weight = {self.weight}\n speed = {self.speed}")
+
+
+class CarDriver(Person):     # 定义另一个子类
+    def display1(self):      # 此处将父类中的方法重写
+        print(f"my name is {self.name},i am {self.age} years old\n")
+
+
+YaoMing = BasketballPlayer(221, 200, 20, "YaoMing", "male", 40)
+Father = CarDriver("Yao", "male", 50)
+Father.display1()
+YaoMing.display1()
+YaoMing.display2()
