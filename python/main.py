@@ -42,7 +42,7 @@ while(file_act != 'q'):
     else:
         print("操作命令错误！")
 
-"""
+
 
 
 # 类和对象
@@ -79,3 +79,86 @@ Father = CarDriver("Yao", "male", 50)
 Father.display1()
 YaoMing.display1()
 YaoMing.display2()
+
+"""
+#
+
+# 密码库
+# pwd_lib = {'admin': '123456', 'yaoshangshu': '000000', 'hahaha': 'yao1234'}
+
+
+# 登录按键动作
+# def btn_click():
+#     value = pwd_lib.get(user_name.text())
+#     if value:
+#         if value == user_key.text():
+#             print("登录成功")
+#         else:
+#             print("密码错误")
+#     else:
+#         print("未查找到用户名")
+#
+#
+# if __name__ == "__main__":
+#     app = Qt.QApplication(sys.argv)
+#     # 创建一个窗口
+#     my_win = Qt.QWidget()
+#     my_win.setWindowTitle("登录界面")
+#     my_win.resize(500, 500)
+#     # 添加按钮
+#     login_btn = Qt.QPushButton("登录", my_win)
+#     # 设置按钮x,y,宽，高   左上角为原点
+#     login_btn.setGeometry(200, 350, 100, 50)
+#     # 按钮绑定动作
+#     login_btn.clicked.connect(btn_click)
+#
+#     # 添加编辑框
+#     user_name = Qt.QLineEdit(my_win)
+#     user_name.setGeometry(100, 100, 300, 50)
+#     user_key = Qt.QLineEdit(my_win)
+#     user_key.setGeometry(100, 200, 300, 50)
+#     # 密码用密文显示
+#     user_key.setEchoMode(Qt.QLineEdit.Password)
+#     # 添加文本框
+#     user_name_label = Qt.QLabel("用户名", my_win)
+#     user_name_label.setGeometry(100, 80, 60, 20)
+#     user_key_label = Qt.QLabel("密码", my_win)
+#     user_key_label.setGeometry(100, 180, 60, 20)
+#     # 显示窗口
+#     my_win.show()
+#     # 等待app事件
+#     sys.exit(app.exec_())
+
+# 人脸识别基础操作
+import cv2
+# 开启默认摄像头
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+# 加载脸部识别的xml文件
+face = cv2.CascadeClassifier("D:/python/Setup/Lib/site-packages/cv2/data/haarcascade_frontalface_default.xml")
+
+# 判断摄像头是否开启
+while cap.isOpened():
+    # 读取图片信息
+    ret, img = cap.read()
+    # 把彩色照片转换为灰度图
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # 对灰度图片进行检测   所有脸的坐标放入face_list中
+    # （灰度图片 = gray_img scaleFactor = 1.1(默认)越大越有可能丢失物体 minNeighbors = 重叠检测，默认为3 minSize =最小像素点）
+    face_list = face.detectMultiScale(gray_img,
+                                      scaleFactor=1.1,
+                                      minNeighbors=5,
+                                      minSize=(32, 32))
+    # 如果有脸  将脸用矩形框起来
+    for(x, y, w, h) in face_list:
+        # 画矩形（ 图像 = img  矩形对角点  框的颜色(BGR)  线条厚度 ）
+        cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 1)
+    # 显示图片
+    cv2.imshow("video", img)
+    # 按键检测退出
+    if (cv2.waitKey(1) & 0xff) == ord('q'):
+        break
+
+# 释放摄像头
+cap.release()
+# 关闭所有OPENCV创建的窗口
+cv2.destroyAllWindows()
